@@ -1,0 +1,90 @@
+[
+  {
+    "model": "books.author",
+    "pk": 1,
+    "fields": {
+      "name": "Rabindranath Tagore",
+      "bio": "Bengali polymath, poet, musician, and artist.",
+      "date_of_birth": "1861-05-07"
+    }
+  },
+  {
+    "model": "books.author",
+    "pk": 2,
+    "fields": {
+      "name": "Satyajit Ray",
+      "bio": "Indian filmmaker, screenwriter, author, and composer.",
+      "date_of_birth": "1921-05-02"
+    }
+  },
+  {
+    "model": "books.bookcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Fiction",
+      "description": "Fictional books."
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 1,
+    "fields": {
+      "title": "Gitanjali",
+      "author": 1,
+      "isbn": "9788171673409",
+      "published_date": "1910-01-01",
+      "available_copies": 5,
+      "category": 1
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 2,
+    "fields": {
+      "title": "Feluda Samagra",
+      "author": 2,
+      "isbn": "9788174505240",
+      "published_date": "1965-01-01",
+      "available_copies": 3,
+      "category": 1
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+      "first_name": "Member",
+      "last_name": "One",
+      "email": "member1@example.com",
+      "address": "Kolkata, India",
+      "phone_number": "1234567890",
+      "password": "pbkdf2_sha256$260000$dummy$dummyhash",
+      "role": "member",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "accounts.memberprofile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "bio": "Avid reader.",
+      "profile_pic": "",
+      "social_links": {},
+      "join_date": "2026-02-27"
+    }
+  },
+  {
+    "model": "transactons.borrowrecord",
+    "pk": 1,
+    "fields": {
+      "member": 1,
+      "book": 1,
+      "borrow_date": "2026-02-20",
+      "return_date": null,
+      "returned": false
+    }
+  }
+]
