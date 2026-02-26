@@ -2,14 +2,16 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
 from accounts.views import UserViewSet, MemberProfileViewSet
-from books.views import BookViewSet, BookCategoryViewSet, BookReviewViewSet, BookImageViewSet
+from books.views import BookViewSet, BookCategoryViewSet, BookReviewViewSet, BookImageViewSet, AuthorViewSet
 
 # Main router
+
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user')
 router.register(r'profiles', MemberProfileViewSet, basename='profile')
 router.register(r'books', BookViewSet, basename='book')
 router.register(r'categories', BookCategoryViewSet, basename='category')
+router.register(r'authors', AuthorViewSet, basename='author')
 
 # Nested routers for books
 books_router = NestedDefaultRouter(router, r'books', lookup='book')

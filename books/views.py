@@ -17,8 +17,14 @@ from django.db.models import Avg
 from rest_framework.response import Response
 from rest_framework import status, viewsets, generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Book, BookReview, BookCategory, BookImage
-from .serializers import BookSerializer, BookReviewSerializer, BookCategorySerializer, BookImageSerializer
+from .models import Book, BookReview, BookCategory, BookImage, Author
+from .serializers import BookSerializer, BookReviewSerializer, BookCategorySerializer, BookImageSerializer, AuthorSerializer
+
+# Author ViewSet
+from rest_framework import viewsets
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
 from django.db import models
 from .filters import BookFilter, BookReviewFilter
 from .pagination import BookResultsSetPagination
