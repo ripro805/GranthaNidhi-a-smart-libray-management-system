@@ -12,6 +12,7 @@ class BookCategoryDetailView(generics.RetrieveAPIView):
     queryset = BookCategory.objects.all()
     serializer_class = BookCategorySerializer
 from rest_framework import viewsets
+from rest_framework.permissions import SAFE_METHODS
 from rest_framework.views import APIView
 from django.db.models import Avg
 from rest_framework.response import Response
@@ -29,6 +30,8 @@ from django.db import models
 from .filters import BookFilter, BookReviewFilter
 from .pagination import BookResultsSetPagination
 
+from rest_framework.permissions import IsAuthenticated
+
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.select_related('category').all()
     serializer_class = BookSerializer
@@ -37,6 +40,14 @@ class BookViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description', 'category__name', 'author__name']
     ordering_fields = ['avg_rating', 'published_date']
     pagination_class = BookResultsSetPagination
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        from .permissions import IsLibrarian
+        # SAFE_METHODS = GET, HEAD, OPTIONS (view only)
+        if self.request.method in SAFE_METHODS:
+            return [IsAuthenticated()]
+        return [IsLibrarian()]
 
 class BookCategoryViewSet(viewsets.ModelViewSet):
     queryset = BookCategory.objects.annotate(book_count=models.Count('books')).all()
@@ -45,6 +56,13 @@ class BookCategoryViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'description']
     ordering_fields = ['name']
     pagination_class = BookResultsSetPagination
+
+    def get_permissions(self):
+        from .permissions import IsLibrarian
+        from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
+        if self.request.method in SAFE_METHODS:
+            return [IsAuthenticated()]
+        return [IsLibrarian()]
 
 class BookImageViewSet(viewsets.ModelViewSet):
     serializer_class = BookImageSerializer
